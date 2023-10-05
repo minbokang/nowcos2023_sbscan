@@ -138,6 +138,10 @@ class _HomeScreenState extends State<HomeScreen> {
         children: <Widget>[
           InAppWebView(
             initialUrlRequest: URLRequest(url: Uri.parse(webViewUrl)),
+            onReceivedServerTrustAuthRequest: (controller, challenge) async {
+              //Do some checks here to decide if CANCELS or PROCEEDS
+              return ServerTrustAuthResponse(action: ServerTrustAuthResponseAction.PROCEED);
+            },
             onWebViewCreated: (controller) {
               webViewController = controller;
             },
@@ -153,8 +157,8 @@ class _HomeScreenState extends State<HomeScreen> {
             },
             key: ValueKey(webViewUrl),
           ),
-          // if (isLoading)  // Placeholder: Show loader until WebView finishes loading
-          //   Center(child: CircularProgressIndicator()),
+          if (isLoading)  // Placeholder: Show loader until WebView finishes loading
+            Center(child: CircularProgressIndicator()),
         ],
       ),
     );
